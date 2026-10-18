@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Church Band Score</title>
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="topbar">
+    <h1>🥁 Church Band Score</h1>
+    <div class="mode-toggle">
+      <button id="btn-edit" class="active" onclick="setMode('edit')">Edit</button>
+      <button id="btn-perf" onclick="setMode('perf')">Display</button>
+    </div>
+    <div class="actions edit-only">
+      <button onclick="saveSong()" class="primary">Save</button>
+      <button onclick="exportJSON()">Export</button>
+      <button onclick="importJSON()">Import</button>
+      <button onclick="clearAll()" class="danger">Clear</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="song-meta edit-only">
+      <div><label>Song Title</label><input type="text" id="song-title" placeholder="e.g. 你成就救恩" oninput="markDirty()" /></div>
+      <div class="meta-row">
+        <div><label>Key</label><input type="text" id="song-key" placeholder="G" oninput="markDirty()" /></div>
+        <div><label>Tempo</label><input type="number" id="song-tempo" placeholder="72" oninput="markDirty()" /></div>
+        <div><label>Time</label><input type="text" id="song-time" placeholder="4/4" oninput="markDirty()" /></div>
+      </div>
+    </div>
+
+    <div class="yt-box">
+      <div class="yt-header edit-only">
+        <input type="text" id="yt-url" placeholder="Paste YouTube URL..." oninput="updateYouTube()" />
+        <button onclick="updateYouTube()" class="primary">Load</button>
+      </div>
+      <div id="yt-container"><div class="yt-placeholder">Paste a YouTube link for the reference track</div></div>
+    </div>
+
+    <div id="edit-view" class="edit-only">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h2 style="font-size:1rem;color:var(--muted);">Arrangement</h2>
+        <button onclick="addSection()" class="success">+ Section</button>
+      </div>
+      <div id="section-list"></div>
+      <div class="add-section">
+        <button onclick="addSection('Intro')">+ Intro</button>
+        <button onclick="addSection('Verse')">+ Verse</button>
+        <button onclick="addSection('Chorus')">+ Chorus</button>
+        <button onclick="addSection('Bridge')">+ Bridge</button>
+        <button onclick="addSection('Tag')">+ Tag</button>
+        <button onclick="addSection('Outro')">+ Outro</button>
+      </div>
+    </div>
+
+    <div id="perf-view" style="display:none;">
+      <div class="perf-meta" id="perf-meta"></div>
+      <div id="perf-sections"></div>
+    </div>
+  </div>
+
+  <div class="perf-nav" id="perf-nav" style="display:none;">
+    <button onclick="prevSection()">◀ Prev</button>
+    <button onclick="nextSection()" class="primary">Next ▶</button>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
